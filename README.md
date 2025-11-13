@@ -13,7 +13,8 @@ Built using Azure OpenAI, LangChain, Python, and FAISS, Orion demonstrates a com
 7. Full RAG pipeline including document loading, chunking, embeddings, vector indexing, and retrieval.
 
 
-#Tech Stack
+# Tech Stack
+
 -Languages
 1. Python
 
@@ -32,6 +33,7 @@ Built using Azure OpenAI, LangChain, Python, and FAISS, Orion demonstrates a com
 3. Vector-based retrieval
 
 # Project Structure
+
 orion/
 │── agent.py                # Conversational RAG agent
 │── index_docs.py           # Document loader, splitter, and vectorstore generator
@@ -41,6 +43,7 @@ orion/
 │── docs/                   # PDFs or study material (excluded from Git)
 
 # How Orion Works
+
 1. Document Ingestion- index_docs.py loads all PDFs from the docs/ directory.Each document is parsed and prepared for chunking.
 
 2. Text Chunking- Using the Recursive Character Text Splitter from LangChain, Orion divides text into overlapping segments to preserve semantic continuity.
@@ -54,6 +57,7 @@ orion/
 6. Interactive Querying- The agent responds to questions with context-aware, citation-relevant answers based entirely on the embedded text.
 
 # Setup Instructions 
+
 1. Clone the repository
 2. Create a virtual environment
    
@@ -86,6 +90,7 @@ orion/
 
 
 # Core Concepts
+
 1. Retrieval-Augmented Generation: Orion follows a retrieval-first architecture, ensuring answers are grounded in the provided documents rather than relying solely on generative output.
 2. Chunking Strategy: Overlapping, semantically coherent chunks improve both retrieval accuracy and the completeness of the model’s responses.
 3. Vector Search: FAISS enables fast similarity search across embeddings, even for large document sets.
