@@ -1,22 +1,41 @@
-# Environment variables
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# ---- Virtual Environments ----
+venv/
+venv312/
+.env/
+.venv/
+
+# ---- Environment Variables ----
 .env
 *.env
 ori.env
 
-# Azure keys or config files
-config.json
+# ---- IDE / Editor ----
+.vscode/
+.idea/
 
-# Vector store files
+# ---- FAISS & Vectorstore ----
 vectorstore/
 *.faiss
 *.pkl
 
-# VSCode
-.vscode/
+# ---- LangChain Cache ----
+lc_cache/
+.cache/
 
-# Python venv (if not already ignored)
-venv/
-venv312/
-
-# Local data
+# ---- PDF / Data Inputs ----
 docs/
+*.pdf
+
+# ---- OS Files ----
+.DS_Store
+Thumbs.db
