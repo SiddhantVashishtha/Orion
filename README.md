@@ -1,141 +1,96 @@
-Orion
+# Orion
+Orion is a Retrieval-Augmented Generation (RAG) system designed to process, index, and intelligently query large documents such as textbooks, research papers, and multi-hundred-page PDFs. The system transforms static text into an interactive, context-aware conversational interface capable of producing grounded, document-based answers.
 
-A Retrieval-Augmented Generation (RAG) powered AI system designed to process, index, and intelligently query large documents such as textbooks, research papers, and multi-hundred-page PDFs.
+Built using Azure OpenAI, LangChain, Python, and FAISS, Orion demonstrates a complete end-to-end RAG pipeline suitable for search, study assistance, research support, or knowledge extraction tasks.
 
-Orion transforms static text into an interactive, context-aware conversational interface capable of answering queries grounded directly in your documents. Built using Azure OpenAI, LangChain, Python, and FAISS.
+# Features:
+1. Conversational question answering with context memory
+2. Capable of handling large PDFs (800+ pages) efficiently
+3. Semantic search powered by Azure OpenAI embeddings
+4. FAISS vector store for fast similarity search
+5. Modular agent architecture to support extension and customization
+6. Local document processing to preserve data privacy
+7. Full RAG pipeline including document loading, chunking, embeddings, vector indexing, and retrieval.
 
-Features
 
-Complete RAG pipeline with document loading, chunking, embedding, and retrieval
+#Tech Stack
+-Languages
+1. Python
 
-Conversational querying with memory support
+-AI & Retrieval
+1. Azure OpenAI (GPT-4o, text-embedding-ada-002)
+2. LangChain
+3. FAISS
 
-Capable of processing large PDFs efficiently (800+ pages)
+-Document Processing
+1. PyPDF
+2. Recursive Character Text Splitter
 
-Semantic search using Azure OpenAI embeddings
+-Architecture
+1. Retrieval-Augmented Generation (RAG)
+2. Conversational memory
+3. Vector-based retrieval
 
-FAISS-powered vector store for fast similarity search
-
-Modular architecture for easy extension
-
-Local document processing to preserve privacy
-
-Tech Stack
-
-Languages
-Python
-
-AI & NLP
-Azure OpenAI (GPT-4o, text-embedding-ada-002), LangChain, FAISS
-
-Document Processing
-PyPDF, Recursive Character Text Splitter
-
-Architecture
-RAG pipeline, conversation memory, vector retrieval
-
-Project Structure
+# Project Structure
 orion/
-│── agent.py                # RAG-enabled conversational agent
-│── index_docs.py           # Document loader, splitter, and vectorstore builder
-│── requirements.txt        # Python dependencies
+│── agent.py                # Conversational RAG agent
+│── index_docs.py           # Document loader, splitter, and vectorstore generator
+│── requirements.txt        # Project dependencies
 │── .env                    # Environment variables (excluded from Git)
-│── vectorstore/            # Saved FAISS index (excluded from Git)
-│── docs/                   # PDFs and source material (excluded from Git)
+│── vectorstore/            # FAISS index (excluded from Git)
+│── docs/                   # PDFs or study material (excluded from Git)
 
-How It Works
-1. Document Ingestion
+# How Orion Works
+1. Document Ingestion- index_docs.py loads all PDFs from the docs/ directory.Each document is parsed and prepared for chunking.
 
-index_docs.py loads PDFs from the docs/ directory and splits them into overlapping text fragments for better semantic representation.
+2. Text Chunking- Using the Recursive Character Text Splitter from LangChain, Orion divides text into overlapping segments to preserve semantic continuity.
 
-2. Embedding Generation
+3. Embedding Generation- Each chunk is embedded using Azure OpenAI’s embedding model. These embeddings form the basis for semantic retrieval.
 
-Each chunk is embedded using Azure OpenAI embedding models.
+4. Vector Indexing- FAISS stores and indexes the generated embeddings, enabling efficient nearest-neighbor search across thousands of chunks.
 
-3. Vector Store Creation
+5. Retrieval and Reasoning- agent.py combines:  Retrieval using FAISS, LLM reasoning using Azure GPT-4o Mini, Conversation memory to produce answers grounded in the user’s documents.
 
-FAISS stores and indexes embeddings to support fast, scalable similarity search.
+6. Interactive Querying- The agent responds to questions with context-aware, citation-relevant answers based entirely on the embedded text.
 
-4. Conversational Retrieval
+# Setup Instructions 
+1. Clone the repository
+2. Create a virtual environment
+   
+   python -m venv venv
+   venv\Scripts\activate
+   
+3. Install dependencies
 
-agent.py builds a conversational agent that integrates:
+   pip install -r requirements.txt
 
-Azure GPT-4o Mini for response generation
+4. Configure environment variables
 
-Retrieval from FAISS
+   Create a .env file in the project root using the following template:
+   
+   AZURE_OPENAI_API_KEY=your_key
+   AZURE_OPENAI_ENDPOINT=your_endpoint
+   AZURE_OPENAI_CHAT_DEPLOYMENT=your_chat_model
+   AZURE_OPENAI_EMBEDDING_DEPLOYMENT=your_embedding_model
 
-Conversation memory for follow-up queries
+5. Add documents
+   Place your PDFs inside: docs/
 
-5. User Interaction
+6. Build the vector store
+   
+   python index_docs.py
 
-The agent produces context-grounded responses based entirely on the user’s documents.
+7. Run the agent
 
-Setup Instructions
-1. Clone the Repository
-git clone https://github.com/YOUR_USERNAME/orion.git
-cd orion
+   python agent.py
 
-2. Create and Activate a Virtual Environment
-python -m venv venv
-venv\Scripts\activate
 
-3. Install Dependencies
-pip install -r requirements.txt
+# Core Concepts
+1. Retrieval-Augmented Generation: Orion follows a retrieval-first architecture, ensuring answers are grounded in the provided documents rather than relying solely on generative output.
+2. Chunking Strategy: Overlapping, semantically coherent chunks improve both retrieval accuracy and the completeness of the model’s responses.
+3. Vector Search: FAISS enables fast similarity search across embeddings, even for large document sets.
+4. Modular Design: Embeddings, LLMs, retrievers, and memory components are separated, allowing experimentation and upgrades without redesigning the entire system
 
-4. Set Up Environment Variables
 
-Create a .env file:
 
-AZURE_OPENAI_API_KEY=your_key
-AZURE_OPENAI_ENDPOINT=your_endpoint
-AZURE_OPENAI_CHAT_DEPLOYMENT=your_gpt4o_deployment
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=your_embedding_deployment
 
-5. Add Documents
-
-Place any PDFs you want indexed into:
-
-docs/
-
-6. Build the Vector Store
-python index_docs.py
-
-7. Run the Conversational Agent
-python agent.py
-
-Core Concepts
-Retrieval-Augmented Generation (RAG)
-
-Orion uses a retrieval-first architecture to ensure responses are grounded directly in the source material rather than relying purely on generative reasoning.
-
-Chunking Strategy
-
-Documents are split using a recursive chunking process to maximize context quality and retrieval accuracy.
-
-Semantic Similarity Search
-
-FAISS enables high-performance nearest-neighbor search over embeddings, allowing fast and accurate retrieval from large document sets.
-
-Azure OpenAI Integration
-
-Separate deployments are used for:
-
-Embeddings
-
-LLM reasoning
-
-This separation improves performance and reliability.
-
-Future Improvements
-
-Web-based user interface
-
-Support for DOCX, PPTX, and additional formats
-
-Summarization tools and auto-generated notes
-
-Multi-document comparison and cross-reference search
-
-License
-
-This project is licensed under the MIT License.
